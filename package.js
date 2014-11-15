@@ -5,7 +5,7 @@
 Package.describe({
   name: "strngs:mailbox",
   summary: "Internal user mail for your meteor project",
-  version: "1.0.0",
+  version: "0.0.0",
   git: "https://github.com/Strngs/mailbox"
 });
 

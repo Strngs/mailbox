@@ -1,5 +1,5 @@
-Mailbox
-=======
+Mailbox - Don;t Install this yet!
+=================================
 
 *** BETA ***
 
