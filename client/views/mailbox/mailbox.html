@@ -1,0 +1,186 @@
+<template name="inbox">
+  {{#if mail}}
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>&nbsp;</th>
+          <th>Subject</th>
+          <th>From</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each mail}}
+          <tr data-id="{{_id}}" data-unopened="{{unopened}}">
+            <td><i class="fa fa-{{#if unopened}}envelope{{else}}eye{{/if}}"></i></td>
+            <td><a href="#" class="openMessage">{{subject}}</a></td>
+            <td>{{#if canReply}}<a href="#">{{fromName}}</a>{{else}}{{fromName}}{{/if}}</td>
+            <td>{{fromNow timestamp}}</td>
+          </tr>
+          <tr class="showMessage">
+            <td colspan="4">
+              <div class="messageBody">
+                {{{message}}}
+              </div>
+              <div class="well well-sm messageFooter">
+                {{#if canReply}}<button data-id="{{_id}}" data-subject="{{subject}}" type="button" class="btn btn-sm btn-primary msgReply">Reply</button>{{/if}}
+                <button type="button" class="btn btn-sm btn-default msgClose">Close</button>
+                {{#if canDelete}}<button data-id="{{_id}}" type="button" class="btn btn-sm btn-danger pull-right msgDelete">Delete</button>{{/if}}
+              </div>
+            </td>
+          </tr>
+          <tr class="replyMessage">
+            <td colspan="4">
+              <div class="quickReply">
+                {{> draftBody}}
+              </div>
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  {{else}}
+    <h4>No mail at this time</h4>
+  {{/if}}
+</template>
+
+<template name="outbox">
+  {{#if mail}}
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Subject</th>
+          <th>To</th>
+          <th>Date</th>
+          <th>&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each mail}}
+          <tr>
+            <td>{{subject}}</td>
+            <td>{{#if canReply}}<a href="{{ pathFor 'profile' }}/{{to}}">{{to}}</a>{{else}}{{to}}{{/if}}</td>
+            <td>{{fromNow timestamp}}</td>
+            <td><a href="#">Delete</a><a href="#">Reply</a></td>
+          </tr>
+          <tr class="showMessage">
+            <td colspan="4">
+              <div class="messageBody">
+                {{message}}
+              </div>
+              <div class="well messageFooter">
+                <button type="button" class="btn btn-default msgClose">Close</button>
+                {{#if canDelete}}<button type="button" class="btn btn-danger pull-right">Delete</button>{{/if}}
+              </div>
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  {{else}}
+    <h4>No mail at this time</h4>
+  {{/if}}
+</template>
+
+<template name="alertbox">
+  {{#if alerts}}
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Source</th>
+          <th>Type</th>
+          <th>Date</th>
+          <th>&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each alerts}}
+          <tr>
+            <td>{{subject}}</td>
+            <td>{{#if canReply}}<a href="{{ pathFor 'profile' }}/{{to}}">{{to}}</a>{{else}}{{to}}{{/if}}</td>
+            <td>{{fromNow timestamp}}</td>
+            <td><a href="#">Delete</a><a href="#">Reply</a></td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  {{else}}
+    <h4>No alerts at this time</h4>
+  {{/if}}
+</template>
+
+<template name="sendmail">
+  <div class="modal fade" id="draft-message" tabindex="-1" role="dialog" aria-labelledby="Draft New Message" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title">Draft New Message</h4>
+        </div>
+        <div class="modal-body">
+          {{> draftBody}}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary">Send</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+</template>
+
+<template name="draftBody">
+  <form id="send-message" action="#" role="form">
+    <div class="form-group">
+      <label for="message-to">Recipient:</label>
+      <input type="text" class="form-control" id="message-to" placeholder="Recipient:" required>
+    </div>
+    <div class="form-group">
+      <label for="message-msg">Message:</label>
+      <textarea class="form-control" id="message-msg" placeholder="Message:" rows="6" required></textarea>
+    </div>
+  </form>
+</template>
+
+<template name="mailbox">
+  {{#if currentUser}}
+    <div class="row">
+      <div class="col-lg-12">
+        <h1 class="page-header">Your mailbox</h1>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <ul class="nav nav-tabs" id="mailbox-tabs" role="tablist">
+          <li>
+            <a href="#inbox" role="tab" data-toggle="tab">Inbox</a>
+          </li>
+          <li>
+            <a href="#sent" role="tab" data-toggle="tab">Sent</a>
+          </li>
+          <li>
+            <a href="#alerts" role="tab" data-toggle="tab">Alerts</a>
+          </li>
+        </ul>
+        <div class="panel panel-default panel-mailbox">
+          <div class="panel-body">
+            <div class="tab-content">
+              <div class="tab-pane active" id="inbox">{{> inbox}}</div>
+              <div class="tab-pane" id="sent">{{> outbox}}</div>
+              <div class="tab-pane" id="alerts">{{> alertbox}}</div>
+            </div>
+          </div>
+          <div class="panel-footer">
+            <button type="button" data-toggle="modal" data-target="#draft-message" class="btn btn-primary">Draft New Message</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {{> sendmail}}
+
+  {{else}}
+    Not logged in.
+  {{/if}}
+</template>

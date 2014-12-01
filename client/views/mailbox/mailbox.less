@@ -1,0 +1,36 @@
+.panel-mailbox {
+  position: relative;
+  top: -3px;
+}
+
+#draft-message {
+  textarea {
+    max-width: 568px;
+  }
+}
+
+.table-hover > tbody {
+  &> tr.showMessage {
+    display: none;
+
+    &:hover {
+      background: none;
+    }
+
+    .messageBody {
+      padding: 5px 0;
+    }
+
+    .well {
+      margin: 5px 0 0;
+    }
+  }
+
+  &> tr.replyMessage {
+    display: none;
+
+    &:hover {
+      background: none;
+    }
+  }
+}

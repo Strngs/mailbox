@@ -1,0 +1,71 @@
+<template name="messagesLoop">
+  {{#if showMessages}}
+    <li class="dropdown">
+      <a class="dropdown-toggle {{ isActiveRoute regex='mailbox' }}" data-toggle="dropdown" href="#">
+        <i class="fa fa-envelope fa-fw"></i><span class="label label-danger unreadMsgLabel">{{messageCount}}</span> <i class="fa fa-caret-down"></i>
+      </a>
+      <ul class="dropdown-menu dropdown-messages">
+        {{#each messages}}
+          <li>
+            <a href="{{ pathFor 'mailbox' }}?id={{_id}}">
+              <div>
+                <strong>{{fromName}}</strong>
+                <span class="pull-right text-muted">
+                  <em>{{fromNow timeStamp}}</em>
+                </span>
+              </div>
+              <div>{{subject}}</div>
+            </a>
+          </li>
+          <li class="divider"></li>
+        {{/each}}
+        <li>
+          <a class="text-center symlink" href="{{ pathFor 'mailbox' }}/#inbox">
+            <strong>See All Messages</strong>
+            <i class="fa fa-angle-right"></i>
+          </a>
+        </li>
+      </ul><!-- /.dropdown-messages -->
+    </li><!-- /.dropdown -->
+  {{else}}
+    <li>
+      <a class="{{ isActiveRoute regex='mailbox' }} symlink" href="{{ pathFor 'mailbox' }}/#inbox"><i class="fa fa-envelope fa-fw"></i></a>
+    </li>
+  {{/if}}
+</template>
+
+<template name="alertLoop">
+  {{#if showAlerts}}
+    <li class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+        <i class="fa fa-bell fa-fw"></i><span class="label label-warning unreadMsgLabel">{{alertCount}}</span> <i class="fa fa-caret-down"></i>
+      </a>
+      <ul class="dropdown-menu dropdown-alerts">
+        {{#each alerts}}
+          <li>
+            <a href="{{#if link}}{{link}}{{else}}{{ pathFor 'mailbox' }}?id={{_id}}#alerts{{/if}}">
+              <div>
+                <i class="fa fa-{{type}} fa-fw"></i> New {{stringTitle type}}
+                <span class="pull-right text-muted small">{{fromNow timeStampe}}</span>
+                <p class="text-muted small">
+                  <strong>{{fromName}}</strong> tagged you in a {{type}}.
+                </p>
+              </div>
+            </a>
+          </li>
+          <li class="divider"></li>
+        {{/each}}
+        <li>
+          <a class="text-center symlink" href="{{ pathFor 'mailbox' }}/#alerts">
+            <strong>See All Alerts</strong>
+            <i class="fa fa-angle-right"></i>
+          </a>
+        </li>
+      </ul><!-- /.dropdown-alerts -->
+    </li><!-- /.dropdown -->
+  {{else}}
+    <li>
+      <a class="{{ isActiveRoute regex='mailbox' }} symlink" href="{{ pathFor 'mailbox' }}/#alerts"><i class="fa fa-bell fa-fw"></i></a>
+    </li>
+  {{/if}}
+</template>
