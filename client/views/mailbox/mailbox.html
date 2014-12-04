@@ -133,7 +133,7 @@
   <form id="send-message" action="#" role="form">
     <div class="form-group">
       <label for="message-to">Recipient:</label>
-      <input type="text" class="form-control" id="message-to" placeholder="Recipient:" required>
+      {{> inputAutocomplete settings=messageTo id="message-to" class="form-control" placeholder="@Recipient:" required="true"}}
     </div>
     <div class="form-group">
       <label for="message-msg">Message:</label>

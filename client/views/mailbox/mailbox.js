@@ -109,3 +109,18 @@ Template.alertbox.helpers({
 Template.alertbox.rendered = function() {
   mailbox.hashHandler();
 };
+
+Template.draftBody.messageTo = function() {
+  return {
+   position: "bottom",
+   limit: 5,
+   rules: [
+     {
+       token: '@',
+       collection: Meteor.users,
+       field: "profile.name",
+       template: Template.userPill
+     }
+   ]
+  }
+};

@@ -25,7 +25,8 @@ Package.on_use(function(api){
     'aldeed:collection2@2.2.0',
     'aldeed:autoform@4.0.0',
     'alanning:roles@1.2.13',
-    'mrt:moment@2.8.1'
+    'mrt:moment@2.8.1',
+    'mizzao:autocomplete@0.4.10'
   ], both);
 
   api.use(['less','session','jquery','templating'],'client')
