@@ -45,11 +45,11 @@ Package.on_use(function(api){
     'client/views/header/header.html',
     'client/views/mailbox/mailbox.html',
     'client/views/mailbox/mailbox.js',
-    'client/helpers.js',
     'client/views/mailbox/mailbox.less'
   ], 'client');
 
   api.add_files([
+    'server/config.js',
     'server/alerts.js',
     'server/messages.js'
   ], 'server');

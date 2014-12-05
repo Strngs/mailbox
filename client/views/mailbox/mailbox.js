@@ -15,6 +15,64 @@ var mailbox = {
   }
 };
 
+/**
+ * Global Helpers
+ */
+Template.registerHelper('fromNow', function(date){
+  return moment(date).fromNow();
+});
+
+/**
+ * MessagesLoop Helpers
+ */
+Template.messagesLoop.helpers({
+  messages: function() {
+   return Session.get('messages');
+  }
+  , showMessages: function() {
+    return Session.get('showMessages');
+  }
+  , messageCount: function() {
+    return Session.get('messageCount');
+  }
+});
+
+/**
+ * MessagesLoop Events
+ */
+Template.messagesLoop.events({
+  'click .symlink': function() {
+    if(Router.current().route.name === 'mailbox') {
+      $('#mailbox-tabs').trigger('mailbox-hashchange', ['#inbox']);
+    }
+  }
+});
+
+/**
+ * AlterLoop Helpers
+ */
+Template.alertLoop.helpers({
+  alerts: function() {
+   return Session.get('alerts');
+  }
+  , showAlerts: function() {
+    return Session.get('showAlerts');
+  }
+  , alertCount: function() {
+    return Session.get('alertCount');
+  }
+});
+
+/**
+ * AlertLoop Events
+ */
+Template.alertLoop.events({
+  'click .symlink': function() {
+    if(Router.current().route.name === 'mailbox') {
+      $('#mailbox-tabs').trigger('mailbox-hashchange', ['#alerts']);
+    }
+  }
+});
 
 /**
  * Mailbox template events

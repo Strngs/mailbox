@@ -25,16 +25,20 @@ Meteor.publish("alerts", function() {
 
 Meteor.startup(function() {
   Accounts.validateNewUser(function (user) {
-    // Send first alert
-    Alerts.sendAlert({
-      canDelete: true
-      , from: MailboxConfig.supportUser._id
-      , fromName: MailboxConfig.supportUser.name
-      , link: '{{ pathFor "mailbox" }}/#alerts'
-      , message: 'You will be able to quickly access system alerts from here'
-      , subject: 'System Alerts'
-      , timeStamp: moment().format('YYYY-MM-DD')
-      , unopened: true
-    });
+    if(typeof user !== 'undefined') {
+      // Send first alert
+      Alerts.sendAlert({
+        canDelete: true
+        , from: MailboxConfig.supportUser._id
+        , fromName: MailboxConfig.supportUser.name
+        , link: '{{ pathFor "mailbox" }}/#alerts'
+        , message: 'You will be able to quickly access system alerts from here'
+        , subject: 'System Alerts'
+        , to: user._id
+        , unopened: true
+      });
+    }
+
+    return true;
   });
 });

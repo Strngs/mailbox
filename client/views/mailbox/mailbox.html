@@ -97,7 +97,7 @@
         {{#each alerts}}
           <tr>
             <td>{{subject}}</td>
-            <td>{{#if canReply}}<a href="{{ pathFor 'profile' }}/{{to}}">{{to}}</a>{{else}}{{to}}{{/if}}</td>
+            <td>{{type}}</td>
             <td>{{fromNow timestamp}}</td>
             <td><a href="#">Delete</a><a href="#">Reply</a></td>
           </tr>

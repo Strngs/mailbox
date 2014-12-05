@@ -41,17 +41,20 @@ Meteor.publish("messages-sent", function() {
 
 Meteor.startup(function() {
   Accounts.validateNewUser(function (user) {
-    // Send welcome message
-    Messages.sendMessage({
-      canDelete: true
-      , canReply: false
-      , from: MailboxConfig.supportUser._id
-      , fromName: MailboxConfig.supportUser.name
-      , message: 'We are excited to have you! :)<br />Please be sure to read the getting started guides for <a href="/docs/user">users</a> and <a href="/docs/devs">devs</a>.'
-      , subject: 'Welcome to Strngs!'
-      , timeStamp: moment().format('YYYY-MM-DD')
-      , to: user._id
-      , unopened: true
-    });
+    if(typeof user !== 'undefined') {
+      // Send welcome message
+      Messages.sendMessage({
+        canDelete: true
+        , canReply: false
+        , from: MailboxConfig.supportUser._id
+        , fromName: MailboxConfig.supportUser.name
+        , message: 'We are excited to have you! :)<br />Please be sure to read the getting started guides for <a href="/docs/user">users</a> and <a href="/docs/devs">devs</a>.'
+        , subject: 'Welcome to Strngs!'
+        , to: user._id
+        , unopened: true
+      });
+    }
+
+    return true;
   });
 });

@@ -10,7 +10,7 @@
             <a href="{{ pathFor 'mailbox' }}?id={{_id}}">
               <div>
                 <strong>{{fromName}}</strong>
-                <span class="pull-right text-muted">
+                <span class="pull-right text-muted small">
                   <em>{{fromNow timeStamp}}</em>
                 </span>
               </div>
@@ -45,10 +45,10 @@
           <li>
             <a href="{{#if link}}{{link}}{{else}}{{ pathFor 'mailbox' }}?id={{_id}}#alerts{{/if}}">
               <div>
-                <i class="fa fa-{{type}} fa-fw"></i> New {{type}}
-                <span class="pull-right text-muted small">{{fromNow timeStampe}}</span>
+                <i class="fa fa-{{type}} fa-fw"></i> New {{type}} Alert
+                <span class="pull-right text-muted small">{{timeStamp}}</span>
                 <p class="text-muted small">
-                  <strong>{{fromName}}</strong> tagged you in a {{type}}.
+                  <strong>{{fromName}}</strong> tagged you in a {{type}} Alert.
                 </p>
               </div>
             </a>
